@@ -14,6 +14,8 @@ SDL_Texture* g_texture = nullptr;
 
 float angle = 0.0f; // Picture angle
 
+bool flipImage = false;
+
 
 //Function prototypes
 bool InitSDL();
@@ -121,8 +123,42 @@ bool Update() {
 	case SDL_QUIT:
 		return true;
 		break;
+
+
+
 	case SDL_KEYDOWN:
-		
+
+		//Chat GPT method, rotate to the left
+		if (e.key.keysym.sym == SDLK_a || e.key.keysym.sym == SDLK_LEFT) {
+			angle -= 15.0f;
+		}
+		//Rotate to the right
+		switch (e.key.keysym.scancode) {
+		case SDL_SCANCODE_D:
+		case SDL_SCANCODE_RIGHT:
+			angle += 15.0f;
+
+		//Flip
+		case SDL_SCANCODE_F:
+			flipImage = !flipImage; //Change the current state != flipImage = true;
+		}
+
+		//Close with Q
+		switch (e.key.keysym.sym) {
+		case SDLK_q:
+			return true;
+			break;
+		}
+
+
+	case SDL_MOUSEBUTTONDOWN:
+
+		//Close with right mouse button
+		switch (e.button.button) {
+		case SDL_BUTTON_RIGHT:
+			return true;
+			break;
+		}
 	}
 	
 	return false;
@@ -137,8 +173,22 @@ void Render() {
 	//Set where to render the texture
 	SDL_Rect renderLocation = { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
 
+
+	/** Traditional way
+	if (flipImage) {
+		SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+	}
+	else {
+		flip = SDL_FLIP_NONE;
+	}
+	*/
+
+
+	//Flip or not
+	SDL_RendererFlip flip = flipImage ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
 	//Render to screen
-	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, angle, NULL, flip);
 
 	//Update the screen
 	SDL_RenderPresent(g_renderer);
