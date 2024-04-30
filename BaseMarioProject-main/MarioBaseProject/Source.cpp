@@ -121,6 +121,8 @@ bool Update() {
 	case SDL_QUIT:
 		return true;
 		break;
+	case SDL_KEYDOWN:
+		
 	}
 	
 	return false;
@@ -136,7 +138,7 @@ void Render() {
 	SDL_Rect renderLocation = { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	//Render to screen
-	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, 0, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, angle, NULL, SDL_FLIP_NONE);
 
 	//Update the screen
 	SDL_RenderPresent(g_renderer);
