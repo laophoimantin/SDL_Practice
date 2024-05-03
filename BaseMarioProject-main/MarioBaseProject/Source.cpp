@@ -6,28 +6,27 @@
 #include <SDL_mixer.h>
 #include <iostream>
 #include "constants.h"
+#include "Commons.h"
+#include "Texture2D.h"
 
 //Globals
 SDL_Window* g_window = nullptr;
 SDL_Renderer* g_renderer = nullptr;
-SDL_Texture* g_texture = nullptr;
+Texture2D* g_texture = nullptr;
 
 float angle = 0.0f; // Picture angle
 
 bool flipImage = false;
-
 
 //Function prototypes
 bool InitSDL();
 void CloseSDL();
 bool Update();
 void Render();
-SDL_Texture* LoadTextureFromFile(std::string path);
-void FreeTexture();
 
 int main(int argc, char* args[])
 {
-	
+
 	//Check if sdl was setup correctly
 	if (InitSDL()) {
 		//SDL_Delay(5000);
@@ -85,15 +84,18 @@ bool InitSDL() {
 		}
 
 		//Load the background texture
-		g_texture = LoadTextureFromFile("Images/test.bmp");
+		g_texture = new Texture2D(g_renderer); // heap memory allocation
+
+		g_texture->LoadFromFile("Images/test.bmp");
 		if (g_texture == nullptr) {
+			std::cout << "Failed to load image from file\n";
 			return false;
 		}
 	}
 }
 
 void CloseSDL() {
-	
+
 	//Release the window
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
@@ -102,12 +104,9 @@ void CloseSDL() {
 	IMG_Quit();
 	SDL_Quit();
 
-
-	//Clear the texture
-	FreeTexture();
-	//Release the renderer
-	SDL_DestroyRenderer(g_renderer);
-	g_renderer = nullptr;
+	//release the texture
+	delete g_texture;
+	g_texture = nullptr;
 }
 
 bool Update() {
@@ -123,9 +122,6 @@ bool Update() {
 	case SDL_QUIT:
 		return true;
 		break;
-
-
-
 	case SDL_KEYDOWN:
 
 		//Chat GPT method, rotate to the left
@@ -160,72 +156,21 @@ bool Update() {
 			break;
 		}
 	}
-	
+
 	return false;
 }
 
+
 void Render() {
-	
+
 	//Clear the screen
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(g_renderer);
 
-	//Set where to render the texture
-	SDL_Rect renderLocation = { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
+	g_texture->Render(Vector2D(), SDL_FLIP_NONE);
 
-
-	/** Traditional way
-	if (flipImage) {
-		SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
-	}
-	else {
-		flip = SDL_FLIP_NONE;
-	}
-	*/
-
-
-	//Flip or not
-	SDL_RendererFlip flip = flipImage ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-
-	//Render to screen
-	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, angle, NULL, flip);
 
 	//Update the screen
 	SDL_RenderPresent(g_renderer);
-
-}
-
-SDL_Texture* LoadTextureFromFile(std::string path) {
-	
-	//Remove momory used for a previous texture
-	FreeTexture();
-	SDL_Texture* p_texture = nullptr;
-
-	//Load the image
-	SDL_Surface* p_surface = IMG_Load(path.c_str());
-	if (p_surface != nullptr) {
-		//Create the texutre from the pixels on the surface
-		p_texture = SDL_CreateTextureFromSurface(g_renderer, p_surface);
-		if (p_texture == nullptr) {
-			std::cout << "Unable to create texture from surface. Error: " << SDL_GetError();
-		}
-		//Remove the loaded surface now that we have a texture
-		SDL_FreeSurface(p_surface);
-	}
-	else {
-		std::cout << "Unable to create texture from surface. Error: " << IMG_GetError();
-	}
-
-	//Return the texture
-	return p_texture;
-}
-
-void FreeTexture(){
-	
-	//Check if texture exists before removing it
-	if (g_texture != nullptr) {
-		SDL_DestroyTexture(g_texture);
-			g_texture = nullptr;
-	}
 
 }
