@@ -4,6 +4,12 @@
 
 #include "Commons.h"
 #include "GameScreen.h"
+<<<<<<< Updated upstream
+=======
+#include "Character.h"
+
+class Character;
+>>>>>>> Stashed changes
 
 class Texture2D;
 
@@ -23,8 +29,15 @@ protected:
 private:
 	Texture2D* m_background_texture;
 	bool SetUpLevel();
+<<<<<<< Updated upstream
 
 };
 
 
+=======
+	Character* my_character;
+
+};
+
+>>>>>>> Stashed changes
 #endif 

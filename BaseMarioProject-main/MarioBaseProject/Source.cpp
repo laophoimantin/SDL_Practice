@@ -132,13 +132,13 @@ bool Update() {
 	case SDL_KEYDOWN:
 
 		//Chat GPT method, rotate to the left
-		if (e.key.keysym.sym == SDLK_a || e.key.keysym.sym == SDLK_LEFT) {
+		if (e.key.keysym.sym == SDLK_a /* || e.key.keysym.sym == SDLK_LEFT*/) {
 			angle -= 15.0f;
 		}
 		//Rotate to the right
 		switch (e.key.keysym.scancode) {
 		case SDL_SCANCODE_D:
-		case SDL_SCANCODE_RIGHT:
+		//case SDL_SCANCODE_RIGHT:
 			angle += 15.0f;
 
 		//Flip
@@ -178,6 +178,7 @@ void Render() {
 	SDL_RenderClear(g_renderer);
 
 
+<<<<<<< Updated upstream
 
 
 	//Update the screen
@@ -185,4 +186,10 @@ void Render() {
 
 
 	game_screen_manager->Render();
+=======
+	game_screen_manager->Render();
+
+	//Update the screen
+	SDL_RenderPresent(g_renderer);
+>>>>>>> Stashed changes
 }
