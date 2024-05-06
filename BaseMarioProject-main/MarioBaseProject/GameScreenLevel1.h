@@ -7,11 +7,6 @@
 
 class Texture2D;
 
-class GameScreenLevel1
-{
-	
-};
-
 class GameScreenLevel1 : GameScreen {
 
 public:
