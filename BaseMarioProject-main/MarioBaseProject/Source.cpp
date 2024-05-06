@@ -178,18 +178,11 @@ void Render() {
 	SDL_RenderClear(g_renderer);
 
 
-<<<<<<< Updated upstream
+	game_screen_manager->Render();
 
 
 	//Update the screen
 	SDL_RenderPresent(g_renderer);
 
 
-	game_screen_manager->Render();
-=======
-	game_screen_manager->Render();
-
-	//Update the screen
-	SDL_RenderPresent(g_renderer);
->>>>>>> Stashed changes
 }

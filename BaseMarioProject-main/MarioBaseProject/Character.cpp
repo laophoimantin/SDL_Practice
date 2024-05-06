@@ -2,7 +2,7 @@
 #include "Texture2D.h"
 #include "constants.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position ) {
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position) {
 
 	m_renderer = renderer;
 	m_position = start_position;
@@ -66,7 +66,7 @@ void Character::Update(float deltaTime, SDL_Event e) {
 	else if (m_moving_right) {
 		MoveRight(deltaTime);
 	}
-	
+
 	SDL_PollEvent(&e);
 	switch (e.type) {
 	case SDL_KEYDOWN:
@@ -80,7 +80,7 @@ void Character::Update(float deltaTime, SDL_Event e) {
 			std::cout << "Right Down" << std::endl;
 			break;
 
-		//Jumping
+			//Jumping
 		case(SDLK_UP):
 			if (m_can_jump) {
 				Jump();

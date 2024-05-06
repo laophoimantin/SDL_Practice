@@ -30,12 +30,9 @@
     <ClCompile Include="GameScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2\SDL\SDL2.lib" />
@@ -63,11 +60,8 @@
     <ClInclude Include="GameScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
->>>>>>> Stashed changes
   </ItemGroup>
 </Project>

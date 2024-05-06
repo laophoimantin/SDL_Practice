@@ -164,10 +164,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="Character.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameScreenLevel1.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
